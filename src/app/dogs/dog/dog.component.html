@@ -1,0 +1,24 @@
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{ selectedName || "Select name" }}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    <button *ngFor="let dog of dogs$ | async"
+      [routerLink]="['/dog', dog.name]"
+      class="dropdown-item"
+      routerLinkActive="active"
+      type="button">{{ dog.name }}</button>
+  </div>
+</div>
+<div *ngIf="selectedName">
+  <h2>
+      Images of {{ selectedName }}
+  </h2>
+
+  <picture *ngFor="let image of dogImages$ | async">
+    <source type="image/jpg" [srcset]="image">
+    <img [src]="image" [alt]="selectedName">
+  </picture>
+</div>
+
+
