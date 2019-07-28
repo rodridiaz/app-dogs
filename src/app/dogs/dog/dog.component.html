@@ -23,7 +23,7 @@
   <div class="row" *ngIf="(dogImages$ | async) as dogImages; else loading">
     <div class="col-lg-12" *ngIf="dogImages.length !== 0; else empty;">
       <div class="card-columns">
-        <div class="card" *ngFor="let image of dogImages$ | async">
+        <div class="card" *ngFor="let image of dogImages">
           <picture>
             <source type="image/jpg" [srcset]="image">
             <img class="card-img img-fluid" [src]="image" [alt]="selectedName">
