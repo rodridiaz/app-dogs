@@ -24,7 +24,8 @@ export class DogComponent implements OnInit {
     this.dogs$ = this.route.paramMap.pipe(
       switchMap(params => {
         return this.service.getDogs().pipe(
-          tap((data) => this.selectedName = data.find(ele => ele.name === params.get('name')) ? params.get('name') : null)
+          tap(this.selectedName = undefined),
+          tap((data) => this.selectedName = data.find(ele => ele.name === params.get('name')) ? params.get('name') : undefined)
         );
       })
     );

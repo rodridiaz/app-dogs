@@ -1,24 +1,46 @@
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      {{ selectedName || "Select name" }}
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    <button *ngFor="let dog of dogs$ | async"
-      [routerLink]="['/dog', dog.name]"
-      class="dropdown-item"
-      routerLinkActive="active"
-      type="button">{{ dog.name }}</button>
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading">Angular Dogs</h1>
+    <p class="lead text-muted">Choose your favorite dog.</p>
+    <div>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ selectedName || "Select name" }}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <button *ngFor="let dog of dogs$ | async"
+            [routerLink]="['/dog', dog.name]"
+            class="dropdown-item"
+            routerLinkActive="active"
+            type="button">{{ dog.name }}</button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<div *ngIf="selectedName">
-  <h2>
-      Images of {{ selectedName }}
-  </h2>
+</section>
 
-  <picture *ngFor="let image of dogImages$ | async">
-    <source type="image/jpg" [srcset]="image">
-    <img [src]="image" [alt]="selectedName">
-  </picture>
+<div class="container" *ngIf="selectedName">
+  <div class="row" *ngIf="(dogImages$ | async); else loading">
+    <div class="col-lg-12" *ngIf="(dogImages$ | async).length !== 0; else empty;">
+      <div class="card-columns">
+        <div class="card" *ngFor="let image of dogImages$ | async">
+          <picture>
+            <source type="image/jpg" [srcset]="image">
+            <img class="card-img img-fluid" [src]="image" [alt]="selectedName">
+          </picture>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #loading>
+    <div class="d-flex align-items-center">
+      <strong>Loading...</strong>
+      <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+    </div>
+  </ng-template>
+  <ng-template #empty>
+      <strong>Empty :(</strong>
+  </ng-template>
 </div>
 
 

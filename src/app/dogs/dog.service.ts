@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, delay } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -21,7 +21,9 @@ export interface IDogImagesResponse {
 }
 
 const httpOptions = {
-  headers: new HttpHeaders({ Accept: 'application/json' })
+  headers: new HttpHeaders({
+    Accept: 'application/json'
+  })
 };
 
 @Injectable({
@@ -46,6 +48,7 @@ export class DogService {
   getDogImages(dogName: string): Observable<string[]> {
     return this.http.get<IDogImagesResponse>(`${environment.apiUrl}${endpoints.breed}${dogName}${endpoints.images}`, httpOptions).pipe(
       map(response => response.message),
+      delay(2000),
       catchError(this.handleError<string[]>('getDogImages', []))
     );
   }
