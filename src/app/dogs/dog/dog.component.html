@@ -20,8 +20,8 @@
 </section>
 
 <div class="container" *ngIf="selectedName">
-  <div class="row" *ngIf="(dogImages$ | async); else loading">
-    <div class="col-lg-12" *ngIf="(dogImages$ | async).length !== 0; else empty;">
+  <div class="row" *ngIf="(dogImages$ | async) as dogImages; else loading">
+    <div class="col-lg-12" *ngIf="dogImages.length !== 0; else empty;">
       <div class="card-columns">
         <div class="card" *ngFor="let image of dogImages$ | async">
           <picture>
